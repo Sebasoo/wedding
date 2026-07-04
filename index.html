@@ -3,185 +3,213 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#1a1a1a">
+  <meta name="theme-color" content="#7A2D3E">
   <meta name="description" content="Приглашение на свадьбу Роберта и Веры — Wedding Show, 6 сентября 2026">
   <meta property="og:title" content="Роберт & Вера — Wedding Show">
   <meta property="og:description" content="6 сентября 2026 · Event Hall Olshevski · 16:30">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ru_RU">
+  <meta property="og:image" content="assets/venue.jpg">
   <title>Роберт & Вера — Wedding Show</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- Video Intro -->
-  <div id="intro" class="intro" aria-hidden="false">
-    <video
-      id="intro-video"
-      class="intro__video"
-      playsinline
-      preload="auto"
-      poster=""
-    >
+
+  <!-- Video Intro Overlay -->
+  <div id="intro" class="intro">
+    <video id="intro-video" class="intro__video" playsinline preload="auto">
       <source src="assets/intro.mp4" type="video/mp4">
     </video>
-    <div class="intro__overlay"></div>
-    <div class="intro__content">
-      <p class="intro__label">Wedding Show</p>
+    <div class="intro__veil"></div>
+    <div class="intro__ui">
+      <p class="intro__badge">Wedding Show</p>
       <button id="play-btn" class="intro__play" aria-label="Смотреть приглашение">
+        <span class="intro__play-ring"></span>
         <span class="intro__play-icon">▶</span>
-        <span class="intro__play-text">Открыть приглашение</span>
       </button>
-      <button id="skip-btn" class="intro__skip" hidden>Пропустить →</button>
+      <span class="intro__play-label">Открыть приглашение</span>
+      <button id="skip-btn" class="intro__skip" hidden>Пропустить</button>
     </div>
     <div id="intro-progress" class="intro__progress" hidden>
       <div class="intro__progress-bar"></div>
     </div>
   </div>
 
-  <!-- Main Invitation -->
-  <main id="invitation" class="invitation" aria-hidden="true">
-    <div class="invitation__bg"></div>
+  <!-- Main Page -->
+  <div id="page" class="page">
 
-    <article class="ticket">
-      <!-- Main body -->
-      <section class="ticket__main">
-        <div class="spotlight" aria-hidden="true">
-          <svg class="spotlight__lamp" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="60" cy="18" rx="28" ry="12" fill="#2a2a2a"/>
-            <path d="M32 18 L20 55 Q60 65 100 55 L88 18 Z" fill="#1a1a1a"/>
-            <rect x="38" y="55" width="44" height="8" rx="2" fill="#333"/>
-            <path d="M25 63 Q60 75 95 63 L90 90 Q60 100 30 90 Z" fill="#222"/>
-            <rect x="52" y="90" width="16" height="40" rx="3" fill="#2a2a2a"/>
-            <rect x="44" y="128" width="32" height="8" rx="2" fill="#333"/>
-          </svg>
-          <div class="spotlight__beam"></div>
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero__video-wrap">
+        <video id="hero-video" class="hero__video" playsinline muted loop preload="metadata">
+          <source src="assets/intro.mp4" type="video/mp4">
+        </video>
+        <div class="hero__overlay"></div>
+      </div>
+      <div class="hero__content">
+        <p class="hero__pretitle reveal">Приглашение на</p>
+        <h1 class="hero__title reveal">Wedding Show</h1>
+        <div class="hero__line reveal"></div>
+        <h2 class="hero__names reveal">Роберт <span>&</span> Вера</h2>
+        <p class="hero__date reveal">6 сентября 2026</p>
+      </div>
+      <div class="hero__scroll reveal" aria-hidden="true">
+        <span>Листайте</span>
+        <div class="hero__scroll-line"></div>
+      </div>
+    </header>
+
+    <!-- Countdown -->
+    <section class="section countdown" id="countdown">
+      <div class="container">
+        <p class="section__label reveal">До главной премьеры</p>
+        <h2 class="section__title reveal">Обратный отсчёт</h2>
+        <div class="countdown__grid reveal">
+          <div class="countdown__item">
+            <span id="cd-days" class="countdown__num">—</span>
+            <span class="countdown__unit">дней</span>
+          </div>
+          <div class="countdown__sep">:</div>
+          <div class="countdown__item">
+            <span id="cd-hours" class="countdown__num">—</span>
+            <span class="countdown__unit">часов</span>
+          </div>
+          <div class="countdown__sep">:</div>
+          <div class="countdown__item">
+            <span id="cd-mins" class="countdown__num">—</span>
+            <span class="countdown__unit">минут</span>
+          </div>
+          <div class="countdown__sep">:</div>
+          <div class="countdown__item">
+            <span id="cd-secs" class="countdown__num">—</span>
+            <span class="countdown__unit">секунд</span>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <header class="ticket__header">
-          <span class="star">✦</span>
-          <p class="ticket__pretitle">Приглашение на</p>
-          <span class="star">✦</span>
-        </header>
-
-        <h1 class="ticket__title">Wedding Show</h1>
-
-        <div class="ticket__divider">
-          <span class="ticket__divider-line"></span>
-          <span class="star star--lg">✦</span>
-          <span class="ticket__divider-line"></span>
-        </div>
-
-        <h2 class="ticket__names">Роберт <span class="amp">&</span> Вера</h2>
-
-        <p class="ticket__tagline">
-          Ваш приход — часть нашей истории.<br>
-          Станьте свидетелем самого важного шоу в нашей жизни!
+    <!-- About -->
+    <section class="section about">
+      <div class="container">
+        <p class="section__label reveal">Акт I</p>
+        <h2 class="section__title reveal">Наша история — ваше шоу</h2>
+        <p class="about__text reveal">
+          Ваш приход — часть нашей истории. Станьте свидетелем самого важного шоу в нашей жизни!
+          Мы создали этот день как настоящую премьеру — с атмосферой, эмоциями и магией момента.
         </p>
+      </div>
+    </section>
 
-        <div class="ticket__details">
-          <div class="detail">
-            <svg class="detail__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+    <!-- Details -->
+    <section class="section details">
+      <div class="container">
+        <p class="section__label reveal">Акт II</p>
+        <h2 class="section__title reveal">Детали премьеры</h2>
+        <div class="details__grid">
+          <article class="detail-card reveal">
+            <div class="detail-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+              </svg>
+            </div>
+            <span class="detail-card__label">Дата</span>
+            <time class="detail-card__value" datetime="2026-09-06">6 сентября 2026</time>
+            <span class="detail-card__sub">Воскресенье</span>
+          </article>
+          <article class="detail-card reveal">
+            <div class="detail-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="9"/>
+                <polyline points="12,7 12,12 16,14"/>
+              </svg>
+            </div>
+            <span class="detail-card__label">Время</span>
+            <span class="detail-card__value">16:30</span>
+            <span class="detail-card__sub">Сбор гостей</span>
+          </article>
+          <article class="detail-card reveal">
+            <div class="detail-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+            </div>
+            <span class="detail-card__label">Место</span>
+            <span class="detail-card__value">Event Hall<br>Olshevski</span>
+            <span class="detail-card__sub">Усадьба у озера</span>
+          </article>
+        </div>
+        <div class="details__actions reveal">
+          <a id="calendar-link" class="btn btn--primary" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <rect x="3" y="4" width="18" height="18" rx="2"/>
               <line x1="3" y1="10" x2="21" y2="10"/>
               <line x1="8" y1="2" x2="8" y2="6"/>
               <line x1="16" y1="2" x2="16" y2="6"/>
             </svg>
-            <span class="detail__label">Дата</span>
-            <time class="detail__value" datetime="2026-09-06">06.09.2026</time>
-          </div>
-          <div class="detail detail--border">
-            <svg class="detail__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="12" cy="12" r="9"/>
-              <polyline points="12,7 12,12 16,14"/>
-            </svg>
-            <span class="detail__label">Время</span>
-            <span class="detail__value">16:30</span>
-          </div>
-          <div class="detail">
-            <svg class="detail__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            Добавить в календарь
+          </a>
+          <a id="map-link" class="btn btn--outline" href="https://yandex.ru/maps/org/event_hall_olshevski/219124670247?si=4tu68ethwba6ja7tab4hdrnug0" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
               <circle cx="12" cy="9" r="2.5"/>
             </svg>
-            <span class="detail__label">Место</span>
-            <span class="detail__value">Event Hall<br>Olshevski</span>
-          </div>
+            Открыть на карте
+          </a>
         </div>
-
-        <div class="ticket__personal">
-          <p class="ticket__personal-label">Персонально для:</p>
-          <p id="guest-name" class="ticket__guest-name">Ваше имя здесь</p>
-        </div>
-      </section>
-
-      <!-- Perforation -->
-      <div class="ticket__perforation" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
       </div>
+    </section>
 
-      <!-- Stub -->
-      <aside class="ticket__stub">
-        <header class="stub__header">
-          <span class="star star--gold">✦</span>
-          <span>VIP Guest</span>
-          <span class="star star--gold">✦</span>
-        </header>
+    <!-- Venue -->
+    <section class="section venue">
+      <div class="container">
+        <p class="section__label reveal">Акт III</p>
+        <h2 class="section__title reveal">Место проведения</h2>
+      </div>
+      <div class="venue__photo-wrap reveal">
+        <img src="assets/venue.jpg" alt="Event Hall Olshevski — усадьба у озера" class="venue__photo" loading="lazy">
+        <div class="venue__photo-overlay">
+          <p class="venue__photo-title">Event Hall Olshevski</p>
+          <p class="venue__photo-sub">Уютная усадьба на берегу озера</p>
+        </div>
+      </div>
+      <div class="container venue__bottom">
+        <div class="venue__qr reveal">
+          <canvas id="qr-code"></canvas>
+          <p class="venue__qr-hint">Сканируйте QR-код<br>для просмотра адреса</p>
+        </div>
+      </div>
+    </section>
 
-        <h3 class="stub__title">Ваш билет<br>на вход</h3>
-
-        <p class="stub__welcome">
-          <span class="stub__heart">♥</span>
-          Добро пожаловать<br>
-          <em>на наше шоу!</em>
+    <!-- Finale -->
+    <section class="section finale">
+      <div class="container">
+        <div class="finale__stars reveal" aria-hidden="true">✦ ✦ ✦ ✦ ✦</div>
+        <h2 class="finale__title reveal">Ждём вас на премьере</h2>
+        <p class="finale__text reveal">
+          Будем рады разделить с вами этот волшебный вечер.<br>
+          До встречи на нашей сцене!
         </p>
-
-        <div class="stub__stars" aria-hidden="true">
-          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-        </div>
-
-        <div class="stub__qr-wrap">
-          <canvas id="qr-code" class="stub__qr"></canvas>
-        </div>
-
-        <p class="stub__venue">Event Hall Olshevski</p>
-        <p class="stub__hint">Сканируйте QR-код<br>для просмотра адреса</p>
-
-        <a id="map-link" href="#" target="_blank" rel="noopener" class="stub__map-btn">
-          Открыть на карте
-        </a>
-      </aside>
-    </article>
-
-    <!-- Actions -->
-    <div class="actions">
-      <button id="calendar-btn" class="action-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <rect x="3" y="4" width="18" height="18" rx="2"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-          <line x1="8" y1="2" x2="8" y2="6"/>
-          <line x1="16" y1="2" x2="16" y2="6"/>
-          <line x1="12" y1="14" x2="12" y2="18"/>
-          <line x1="10" y1="16" x2="14" y2="16"/>
-        </svg>
-        Добавить в календарь
-      </button>
-      <button id="replay-btn" class="action-btn action-btn--ghost">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <polygon points="5,3 19,12 5,21"/>
-        </svg>
-        Посмотреть видео снова
-      </button>
-    </div>
+        <p class="finale__names reveal">Роберт & Вера</p>
+        <button id="replay-btn" class="btn btn--ghost reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="5,3 19,12 5,21"/>
+          </svg>
+          Посмотреть видео снова
+        </button>
+      </div>
+    </section>
 
     <footer class="footer">
-      <p>С нетерпением ждём вас на нашем празднике!</p>
-      <p class="footer__love">Роберт & Вера</p>
+      <p>Wedding Show · 06.09.2026</p>
     </footer>
-  </main>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <script src="js/main.js"></script>

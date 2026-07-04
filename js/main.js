@@ -1,133 +1,208 @@
 (function () {
   'use strict';
 
-  const MAP_URL = 'https://yandex.by/maps/?text=Event+Hall+Olshevski+Гродно';
-  const WEDDING = {
-    title: 'Свадьба Роберта и Веры',
-    date: '20260906T133000Z',
-    endDate: '20260906T200000Z',
+  var MAP_URL = 'https://yandex.ru/maps/org/event_hall_olshevski/219124670247?si=4tu68ethwba6ja7tab4hdrnug0';
+  var WEDDING_DATE = new Date('2026-09-06T16:30:00+03:00');
+
+  var CALENDAR = {
+    title: 'Свадьба Роберта и Веры — Wedding Show',
+    start: '20260906T133000Z',
+    end: '20260906T190000Z',
     location: 'Event Hall Olshevski',
-    description: 'Wedding Show — самое важное шоу в нашей жизни!'
+    details: 'Wedding Show — самое важное шоу в нашей жизни! ' + MAP_URL
   };
 
-  const intro = document.getElementById('intro');
-  const invitation = document.getElementById('invitation');
-  const video = document.getElementById('intro-video');
-  const playBtn = document.getElementById('play-btn');
-  const skipBtn = document.getElementById('skip-btn');
-  const progressWrap = document.getElementById('intro-progress');
-  const progressBar = progressWrap.querySelector('.intro__progress-bar');
-  const replayBtn = document.getElementById('replay-btn');
-  const calendarBtn = document.getElementById('calendar-btn');
-  const guestNameEl = document.getElementById('guest-name');
-  const mapLink = document.getElementById('map-link');
+  var intro = document.getElementById('intro');
+  var page = document.getElementById('page');
+  var introVideo = document.getElementById('intro-video');
+  var heroVideo = document.getElementById('hero-video');
+  var playBtn = document.getElementById('play-btn');
+  var skipBtn = document.getElementById('skip-btn');
+  var progressWrap = document.getElementById('intro-progress');
+  var progressBar = progressWrap.querySelector('.intro__progress-bar');
+  var replayBtn = document.getElementById('replay-btn');
+  var calendarLink = document.getElementById('calendar-link');
 
-  mapLink.href = MAP_URL;
-
-  function getGuestName() {
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get('guest') || params.get('name') || params.get('g');
-    if (name) {
-      guestNameEl.textContent = decodeURIComponent(name);
-    }
+  function buildGoogleCalendarUrl() {
+    var params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: CALENDAR.title,
+      dates: CALENDAR.start + '/' + CALENDAR.end,
+      details: CALENDAR.details,
+      location: CALENDAR.location
+    });
+    return 'https://calendar.google.com/calendar/render?' + params.toString();
   }
 
+  function openCalendar(e) {
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    var isAndroid = /Android/.test(navigator.userAgent);
+
+    if (isIOS) {
+      e.preventDefault();
+      var ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Wedding Show//RU',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH',
+        'BEGIN:VEVENT',
+        'DTSTART:' + CALENDAR.start,
+        'DTEND:' + CALENDAR.end,
+        'SUMMARY:' + CALENDAR.title,
+        'DESCRIPTION:' + CALENDAR.details.replace(/\n/g, '\\n'),
+        'LOCATION:' + CALENDAR.location,
+        'URL:' + MAP_URL,
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      var link = document.createElement('a');
+      link.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+      link.download = 'wedding-show.ics';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+
+    if (isAndroid) {
+      e.preventDefault();
+      var gParams = new URLSearchParams({
+        action: 'TEMPLATE',
+        text: CALENDAR.title,
+        dates: CALENDAR.start + '/' + CALENDAR.end,
+        details: CALENDAR.details,
+        location: CALENDAR.location
+      });
+      window.open('https://calendar.google.com/calendar/render?' + gParams.toString(), '_blank');
+      return;
+    }
+
+    calendarLink.href = buildGoogleCalendarUrl();
+  }
+
+  calendarLink.href = buildGoogleCalendarUrl();
+  calendarLink.addEventListener('click', openCalendar);
+
   function generateQR() {
-    const canvas = document.getElementById('qr-code');
+    var canvas = document.getElementById('qr-code');
     if (typeof QRCode !== 'undefined') {
       QRCode.toCanvas(canvas, MAP_URL, {
-        width: 120,
-        margin: 1,
-        color: { dark: '#1a1a1a', light: '#fafafa' }
+        width: 140,
+        margin: 2,
+        color: { dark: '#7A2D3E', light: '#FAFAF8' }
       });
     }
   }
 
-  function showInvitation() {
+  function showPage() {
     intro.classList.add('intro--hidden');
-    intro.setAttribute('aria-hidden', 'true');
-    invitation.classList.add('invitation--visible');
-    invitation.setAttribute('aria-hidden', 'false');
-    video.pause();
+    page.classList.add('page--visible');
+    introVideo.pause();
+    heroVideo.play().catch(function () {});
     sessionStorage.setItem('wedding-intro-seen', '1');
+    initReveals();
   }
 
   function showIntro() {
     intro.classList.remove('intro--hidden', 'intro--playing');
-    intro.setAttribute('aria-hidden', 'false');
-    invitation.classList.remove('invitation--visible');
-    invitation.setAttribute('aria-hidden', 'true');
-    video.currentTime = 0;
-    playBtn.parentElement.style.opacity = '';
-    playBtn.parentElement.style.pointerEvents = '';
+    page.classList.remove('page--visible');
+    introVideo.currentTime = 0;
     skipBtn.hidden = true;
     progressWrap.hidden = true;
     progressBar.style.width = '0%';
+    heroVideo.pause();
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
   function playVideo() {
     intro.classList.add('intro--playing');
     skipBtn.hidden = false;
     progressWrap.hidden = false;
-
-    video.muted = false;
-    video.play().catch(function () {
-      video.muted = true;
-      video.play();
+    introVideo.muted = false;
+    introVideo.play().catch(function () {
+      introVideo.muted = true;
+      introVideo.play();
     });
   }
 
   playBtn.addEventListener('click', playVideo);
+  skipBtn.addEventListener('click', showPage);
+  replayBtn.addEventListener('click', showIntro);
 
-  skipBtn.addEventListener('click', showInvitation);
-
-  video.addEventListener('timeupdate', function () {
-    if (video.duration) {
-      progressBar.style.width = (video.currentTime / video.duration * 100) + '%';
+  introVideo.addEventListener('timeupdate', function () {
+    if (introVideo.duration) {
+      progressBar.style.width = (introVideo.currentTime / introVideo.duration * 100) + '%';
     }
   });
 
-  video.addEventListener('ended', showInvitation);
-
-  replayBtn.addEventListener('click', function () {
-    showIntro();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  calendarBtn.addEventListener('click', function () {
-    const ics = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Wedding Show//RU',
-      'BEGIN:VEVENT',
-      'DTSTART:' + WEDDING.date,
-      'DTEND:' + WEDDING.endDate,
-      'SUMMARY:' + WEDDING.title,
-      'DESCRIPTION:' + WEDDING.description,
-      'LOCATION:' + WEDDING.location,
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
-
-    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'wedding-show.ics';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
+  introVideo.addEventListener('ended', showPage);
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !intro.classList.contains('intro--hidden')) {
-      showInvitation();
+      showPage();
     }
   });
 
-  getGuestName();
+  function updateCountdown() {
+    var now = Date.now();
+    var diff = WEDDING_DATE.getTime() - now;
+
+    var els = {
+      days: document.getElementById('cd-days'),
+      hours: document.getElementById('cd-hours'),
+      mins: document.getElementById('cd-mins'),
+      secs: document.getElementById('cd-secs')
+    };
+
+    if (diff <= 0) {
+      els.days.textContent = '0';
+      els.hours.textContent = '0';
+      els.mins.textContent = '0';
+      els.secs.textContent = '0';
+      return;
+    }
+
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+
+    var values = { days: d, hours: h, mins: m, secs: s };
+    Object.keys(values).forEach(function (key) {
+      var val = String(values[key]).padStart(2, '0');
+      if (els[key].textContent !== val) {
+        els[key].textContent = val;
+        els[key].classList.remove('tick');
+        void els[key].offsetWidth;
+        els[key].classList.add('tick');
+      }
+    });
+  }
+
+  var revealObserver;
+
+  function initReveals() {
+    if (revealObserver) return;
+    revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      revealObserver.observe(el);
+    });
+  }
+
   generateQR();
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 
   if (sessionStorage.getItem('wedding-intro-seen')) {
-    showInvitation();
+    showPage();
   }
 })();
