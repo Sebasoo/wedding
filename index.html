@@ -21,7 +21,8 @@
   <!-- Video Intro Overlay -->
   <div id="intro" class="intro">
     <video id="intro-video" class="intro__video" playsinline preload="auto">
-      <source src="assets/intro.mp4" type="video/mp4">
+      <source src="assets/intro.mov" type="video/quicktime">
+      <source src="assets/intro.mov" type="video/mp4">
     </video>
     <div class="intro__veil"></div>
     <div class="intro__ui">
@@ -52,7 +53,8 @@
     <header class="hero">
       <div class="hero__video-wrap">
         <video id="hero-video" class="hero__video" playsinline muted loop preload="metadata">
-          <source src="assets/intro.mp4" type="video/mp4">
+          <source src="assets/intro.mov" type="video/quicktime">
+      <source src="assets/intro.mov" type="video/mp4">
         </video>
         <div class="hero__overlay"></div>
       </div>
@@ -184,36 +186,63 @@
           Наш праздник — настоящая премьера. Просим вас выбрать наряд в стиле вечернего dress code,
           чтобы каждый гость стал частью общей картины.
         </p>
-        <div class="dresscode__grid">
-          <article class="dresscode__card reveal">
-            <div class="dresscode__photo-wrap">
-              <img src="assets/dresscode-men.jpg" alt="Пример образа для мужчин — костюм с бабочкой" class="dresscode__photo" loading="lazy">
-            </div>
-            <div class="dresscode__info">
-              <h3 class="dresscode__heading">Для мужчин</h3>
-              <p class="dresscode__desc">Классический костюм или смокинг с <strong>бабочкой</strong></p>
-              <span class="dresscode__tag">Black Tie</span>
-            </div>
-          </article>
-          <article class="dresscode__card reveal">
-            <div class="dresscode__photo-wrap">
-              <img src="assets/dresscode-women.jpg" alt="Пример образа для женщин — вечернее платье" class="dresscode__photo" loading="lazy">
-            </div>
-            <div class="dresscode__info">
-              <h3 class="dresscode__heading">Для женщин</h3>
-              <p class="dresscode__desc">Элегантное <strong>коктейльное</strong> или <strong>вечернее платье</strong></p>
-              <span class="dresscode__tag">Cocktail Attire</span>
-            </div>
-          </article>
-        </div>
-        <div class="dresscode__palette reveal">
-          <p class="dresscode__palette-label">Рекомендуемые оттенки</p>
-          <div class="dresscode__swatches">
-            <span class="dresscode__swatch dresscode__swatch--white" title="Белый"></span>
-            <span class="dresscode__swatch dresscode__swatch--burgundy" title="Бордовый"></span>
-            <span class="dresscode__swatch dresscode__swatch--green" title="Нежно-зелёный"></span>
+
+        <div class="dresscode__rules reveal">
+          <div class="dresscode__rule">
+            <span class="dresscode__tag">Black Tie</span>
+            <p>Мужчины — костюм или смокинг с <strong>бабочкой</strong></p>
           </div>
-          <p class="dresscode__palette-text">Белый · Бордовый · Нежно-зелёный</p>
+          <div class="dresscode__rule">
+            <span class="dresscode__tag">Cocktail Attire</span>
+            <p>Женщины — <strong>коктейльное</strong> или <strong>вечернее платье</strong></p>
+          </div>
+        </div>
+
+        <div class="dresscode__colors">
+          <p class="dresscode__colors-title reveal">Палитра нарядов</p>
+          <p class="dresscode__colors-sub reveal">Вдохновляйтесь этими оттенками при выборе образа</p>
+          <div class="dresscode__colors-grid">
+            <figure class="color-board reveal">
+              <img src="assets/color-gold.png" alt="Space Sand — золотистый оттенок" loading="lazy">
+              <figcaption>Space Sand</figcaption>
+            </figure>
+            <figure class="color-board reveal">
+              <img src="assets/color-cream.png" alt="Buttercream — кремовый оттенок" loading="lazy">
+              <figcaption>Buttercream</figcaption>
+            </figure>
+            <figure class="color-board reveal">
+              <img src="assets/color-blue.png" alt="Crown Blue — синий оттенок" loading="lazy">
+              <figcaption>Crown Blue</figcaption>
+            </figure>
+            <figure class="color-board reveal">
+              <img src="assets/color-green.png" alt="Palm — нежно-зелёный оттенок" loading="lazy">
+              <figcaption>Palm</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="dresscode__gents reveal">
+          <div class="dresscode__gents-header">
+            <span class="dresscode__gents-icon">🎩</span>
+            <p class="dresscode__gents-msg">
+              Дорогие джентельмены! Мы понимаем, что для вас гардероб собрать сложнее, чем леди,
+              поэтому мы подготовили референсы!
+            </p>
+          </div>
+          <div class="dresscode__refs-grid">
+            <div class="dresscode__ref reveal">
+              <img src="assets/ref-men-1.png" alt="Референс образа для мужчин" loading="lazy">
+            </div>
+            <div class="dresscode__ref reveal">
+              <img src="assets/ref-men-2.png" alt="Референс образа для мужчин" loading="lazy">
+            </div>
+            <div class="dresscode__ref reveal">
+              <img src="assets/ref-men-3.png" alt="Референс образа для мужчин" loading="lazy">
+            </div>
+            <div class="dresscode__ref reveal">
+              <img src="assets/ref-men-4.png" alt="Референс образа для мужчин" loading="lazy">
+            </div>
+          </div>
         </div>
       </div>
     </section>
