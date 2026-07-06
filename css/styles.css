@@ -488,6 +488,38 @@ a { color: inherit; }
   font-weight: 600;
 }
 
+.wine-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+  margin-bottom: 2rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(122, 45, 62, 0.04);
+  border: 1px solid rgba(122, 45, 62, 0.12);
+  border-radius: 12px;
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+.wine-notice__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.wine-notice__text {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+.wine-notice__text strong {
+  color: var(--burgundy);
+  font-weight: 600;
+}
+
 /* ===== Buttons ===== */
 .btn {
   display: inline-flex;
