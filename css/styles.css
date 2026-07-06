@@ -628,9 +628,22 @@ a { color: inherit; }
   margin: 0 auto;
 }
 
-@media (min-width: 640px) {
+.color-board:last-child:nth-child(5) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: calc(50% - 0.5rem);
+}
+
+@media (min-width: 768px) {
   .dresscode__colors-grid {
-    gap: 1.25rem;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+  }
+
+  .color-board:last-child:nth-child(5) {
+    grid-column: auto;
+    justify-self: stretch;
+    width: auto;
   }
 }
 
