@@ -2,13 +2,13 @@
   'use strict';
 
   var MAP_URL = 'https://yandex.ru/maps/org/event_hall_olshevski/219124670247?si=4tu68ethwba6ja7tab4hdrnug0';
-  var WEDDING_DATE = new Date('2026-09-06T15:00:00+03:00');
+  var WEDDING_DATE = new Date('2026-09-06T15:30:00+03:00');
 
   var CALENDAR = {
     title: 'Свадьба Роберта и Веры — Wedding Show',
-    start: '20260906T120000Z',
+    start: '20260906T123000Z',
     end: '20260906T160000Z',
-    location: 'Event Hall Olshevski',
+    location: 'Olshevsky House',
     details: 'Wedding Show — самое яркое шоу в нашей жизни! Подтвердите присутствие до 6 августа. ' + MAP_URL
   };
 
