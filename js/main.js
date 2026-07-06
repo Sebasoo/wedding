@@ -3,15 +3,13 @@
 
   var MAP_URL = 'https://yandex.ru/maps/org/event_hall_olshevski/219124670247?si=4tu68ethwba6ja7tab4hdrnug0';
   var WEDDING_DATE = new Date('2026-09-06T15:00:00+03:00');
-  var VIDEO_TRIM = 5;
-  var CAPTION_LINES = 5;
 
   var CALENDAR = {
     title: 'Свадьба Роберта и Веры — Wedding Show',
     start: '20260906T120000Z',
     end: '20260906T160000Z',
     location: 'Event Hall Olshevski',
-    details: 'Wedding Show — самое важное шоу в нашей жизни! Подтвердите присутствие до 6 августа. ' + MAP_URL
+    details: 'Wedding Show — самое яркое шоу в нашей жизни! Подтвердите присутствие до 6 августа. ' + MAP_URL
   };
 
   var intro = document.getElementById('intro');
@@ -24,13 +22,6 @@
   var progressBar = progressWrap.querySelector('.intro__progress-bar');
   var replayBtn = document.getElementById('replay-btn');
   var calendarLink = document.getElementById('calendar-link');
-  var introCaptions = document.getElementById('intro-captions');
-  var captionLines = introCaptions.querySelectorAll('.intro__caption-line');
-
-  function getEffectiveDuration() {
-    if (!introVideo.duration || isNaN(introVideo.duration)) return null;
-    return Math.max(introVideo.duration - VIDEO_TRIM, 1);
-  }
 
   function buildGoogleCalendarUrl() {
     var params = new URLSearchParams({
@@ -94,30 +85,10 @@
   calendarLink.href = buildGoogleCalendarUrl();
   calendarLink.addEventListener('click', openCalendar);
 
-  function resetCaptions() {
-    captionLines.forEach(function (line) {
-      line.classList.remove('visible');
-    });
-    introCaptions.hidden = true;
-  }
-
-  function updateCaptions(currentTime) {
-    var effective = getEffectiveDuration();
-    if (!effective) return;
-
-    var progress = currentTime / effective;
-    captionLines.forEach(function (line, i) {
-      if (progress >= i / CAPTION_LINES) {
-        line.classList.add('visible');
-      }
-    });
-  }
-
   function showPage() {
     intro.classList.add('intro--hidden');
     page.classList.add('page--visible');
     introVideo.pause();
-    resetCaptions();
     heroVideo.play().catch(function () {});
     sessionStorage.setItem('wedding-intro-seen', '1');
     initReveals();
@@ -130,7 +101,6 @@
     skipBtn.hidden = true;
     progressWrap.hidden = true;
     progressBar.style.width = '0%';
-    resetCaptions();
     heroVideo.pause();
     window.scrollTo({ top: 0, behavior: 'auto' });
   }
@@ -139,8 +109,6 @@
     intro.classList.add('intro--playing');
     skipBtn.hidden = false;
     progressWrap.hidden = false;
-    introCaptions.hidden = false;
-    captionLines.forEach(function (line) { line.classList.remove('visible'); });
 
     introVideo.muted = false;
     introVideo.play().catch(function () {
@@ -154,26 +122,12 @@
   replayBtn.addEventListener('click', showIntro);
 
   introVideo.addEventListener('timeupdate', function () {
-    var effective = getEffectiveDuration();
-    if (!effective) return;
-
-    if (introVideo.currentTime >= effective) {
-      showPage();
-      return;
+    if (introVideo.duration) {
+      progressBar.style.width = (introVideo.currentTime / introVideo.duration * 100) + '%';
     }
-
-    progressBar.style.width = (introVideo.currentTime / effective * 100) + '%';
-    updateCaptions(introVideo.currentTime);
   });
 
   introVideo.addEventListener('ended', showPage);
-
-  heroVideo.addEventListener('timeupdate', function () {
-    var effective = getEffectiveDuration();
-    if (effective && heroVideo.currentTime >= effective) {
-      heroVideo.currentTime = 0;
-    }
-  });
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !intro.classList.contains('intro--hidden')) {
