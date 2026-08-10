@@ -57,8 +57,37 @@
 
   introVideo.addEventListener('ended', showPage);
 
+  function isIntroVisible() {
+    return !intro.classList.contains('intro--hidden');
+  }
+
+  window.addEventListener('wheel', function (e) {
+    if (isIntroVisible() && e.deltaY > 0) {
+      e.preventDefault();
+      showPage();
+    }
+  }, { passive: false });
+
+  var touchStartY = null;
+
+  window.addEventListener('touchstart', function (e) {
+    if (!isIntroVisible() || !e.touches.length) return;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', function (e) {
+    if (!isIntroVisible() || touchStartY === null || !e.touches.length) return;
+    var deltaY = touchStartY - e.touches[0].clientY;
+    if (deltaY > 40) {
+      touchStartY = null;
+      showPage();
+    }
+  }, { passive: true });
+
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !intro.classList.contains('intro--hidden')) {
+    if (!isIntroVisible()) return;
+    if (e.key === 'Escape' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault();
       showPage();
     }
   });
